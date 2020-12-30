@@ -20,5 +20,14 @@ class AppWindow extends BrowserWindow{
   }
 }
 app.on('ready', () =>{
-  
+  app.on('ready', () =>{
+  const mainWindow = new AppWindow({},'./renderer/index.html')
+  mainWindow.webContents.on('did-finish-load',() =>{
+    mainWindow.send('getTracks', myStore.getTracks())
+  })
+  ipcMain.on('delete-track', (event, id) => {
+    const updatedTracks = myStore.deleteTrack(id).getTracks()
+    mainWindow.send('getTracks', updatedTracks)
+  })
+})
 })
