@@ -80,3 +80,11 @@ $('tracksList').addEventListener('click',(event) =>{
         ipcRenderer.send('delete-track' , id)
     }
 })
+
+$('music_bar').addEventListener('click', (event) => {
+    var bar_w = $('music_bar').offsetWidth
+    var click_w = event.offsetX
+    // if (musicAudio.canPlayType()){
+        musicAudio.currentTime = (click_w / bar_w) * musicAudio.duration
+    //}
+})
