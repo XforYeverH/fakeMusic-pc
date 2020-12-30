@@ -31,6 +31,15 @@ app.on('ready', () =>{
       parent:mainWindow
     },'./renderer/add.html')
   })
+  
+  ipcMain.on('music-lyric-window',() => {
+    const addWindow = new AppWindow({
+      width: 500,
+      heigh: 400,
+      parent:mainWindow
+    },'./renderer/play.html')
+  })
+
   ipcMain.on('add-tracks', (event,tracks) =>{
     const updatedTracks = myStore.addTracks(tracks).getTracks()
     mainWindow.send('getTracks', updatedTracks)//将添加到的tracks发送给mainwindow
