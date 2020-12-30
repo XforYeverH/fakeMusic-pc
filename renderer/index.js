@@ -21,8 +21,8 @@ const renderListHTML = (tracks) =>{
           <b>${track.fileName}</b>
         </div>
         <div class="col-2">
-          <i class="fas fa-play mr-3 " data-id="${track.id}"></i>
-          <i class="fas fa-trash-alt " data-id="${track.id}"></i>
+          <i class="fas fa-play mr-3 " id="${track.id}_play" data-id="${track.id}"></i>
+          <i class="fas fa-trash-alt " id="${track.id}_delete" data-id="${track.id}"></i>
         </div>
       </li>`
       return html
@@ -61,6 +61,33 @@ musicAudio.addEventListener('loadedmetadata', () =>{//渲染播放器状态
 musicAudio.addEventListener('timeupdate', ()=>{//更新播放器状态
    updateProgressHTML(musicAudio.currentTime,musicAudio.duration)
 })
+
+musicAudio.addEventListener('ended', () =>{
+    var musicIndex = allTracks.findIndex(track => track.id === currentTrack.id )
+    var tracksLength = allTracks.length
+    musicIndex += 1
+    // if(musicIndex >= tracksLength) {
+    //     musicIndex = 0
+    // }
+    musicIndex %= tracksLength
+    console.log(musicIndex)
+    console.log(tracksLength)
+    console.log(currentTrack.id)
+    var oldMusicItem =$(`${currentTrack.id}_play`) 
+    currentTrack = allTracks[musicIndex]
+     console.log(currentTrack.id)
+    var newMusicItem = $(`${currentTrack.id}_play`)
+
+    var oldClassVal = oldMusicItem.getAttribute('class').replace('fa-pause' , 'fa-play')
+    oldMusicItem.setAttribute('class', oldClassVal)
+    var newClassVal = newMusicItem.getAttribute('class').replace('fa-play','fa-pause')
+    newMusicItem.setAttribute('class', newClassVal)
+
+    musicAudio.src = currentTrack.path
+    musicAudio.play()
+
+})
+
 $('tracksList').addEventListener('click',(event) =>{
     event.preventDefault()
     const {dataset, classList} = event.target
