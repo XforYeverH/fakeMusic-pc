@@ -56,7 +56,7 @@ ipcRenderer.on('getTracks', (event,tracks) => {
     console.log('receive tracks' , tracks)
     allTracks = tracks
     renderListHTML(tracks)
-    if(currentTrack){
+    if(!musicAudio.paused) {
         var musicPlaying = $(`${currentTrack.id}_play`)
         var classValue = musicPlaying.getAttribute('class').replace('fa-play','fa-pause')
         musicPlaying.setAttribute('class',classValue)
@@ -120,7 +120,7 @@ $('tracksList').addEventListener('click',(event) =>{
         ipcRenderer.send('delete-track' , id)
     } else if (id && classList.contains('fa-image')) {
         ipcRenderer.send('get-poster' , id)
-    } else {
+    } else if (id && classList.contains('fa-file-word')) {
         ipcRenderer.send('get-lyrics' , id)
     }
 })
