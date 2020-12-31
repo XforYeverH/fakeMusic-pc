@@ -48,6 +48,28 @@ app.on('ready', () =>{
     const updatedTracks = myStore.deleteTrack(id).getTracks()
     mainWindow.send('getTracks', updatedTracks)
   })
+  ipcMain.on('get-poster', (event,id) =>{
+    dialog.showOpenDialog({
+      properties: ['openFile'],
+      filters: [{ name: 'Poster', extensions:['jpg','png','gif'] }]
+    }).then(result => {
+      if (result.filePaths){
+        const updatedTracks = myStore.mdfPoster(id , result.filePaths[0]).getTracks()
+        mainWindow.send('getTracks', updatedTracks)
+      }
+    })
+  })
+  ipcMain.on('get-lyrics', (event, id) => {
+    dialog.showOpenDialog({
+      properties: ['openFile'],
+      filters: [{ name: 'Lyrics', extensions:['lrc'] }]
+    }).then(result => {
+      if (result.filePaths){
+        const updatedTracks = myStore.mdfLyrics(id , result.filePaths[0]).getTracks()
+        mainWindow.send('getTracks', updatedTracks)
+      }
+    })
+  })
 
   ipcMain.on('open-music-file',(event)=>{
     dialog.showOpenDialog({
