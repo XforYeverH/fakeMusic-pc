@@ -5,8 +5,8 @@ const myStore = new DataStore({'name': 'Music Data'})
 class AppWindow extends BrowserWindow{
   constructor(config, fileLocation){
     const basicConfig = {
-      width: 800,
-      heigh: 600,
+      width: 1200,
+      height: 800,
       webPreferences: {
       nodeIntegration: true
      }
@@ -20,22 +20,27 @@ class AppWindow extends BrowserWindow{
   }
 }
 app.on('ready', () =>{
-  const mainWindow = new AppWindow({},'./renderer/index.html')
+  const mainWindow = new AppWindow({
+    minWidth:800,
+    minHeight:600
+  },'./renderer/index.html')
   mainWindow.webContents.on('did-finish-load',() =>{
     mainWindow.send('getTracks', myStore.getTracks())
   })
   ipcMain.on('add-music-window',() => {
     const addWindow = new AppWindow({
       width: 500,
-      heigh: 400,
+      height: 400,
       parent:mainWindow
     },'./renderer/add.html')
   })
   
   ipcMain.on('music-lyric-window',() => {
     const addWindow = new AppWindow({
-      width: 500,
-      heigh: 400,
+      width: 800,
+      height: 600,
+      minWidth: 600,
+      minHeight: 400,
       parent:mainWindow
     },'./renderer/play.html')
   })

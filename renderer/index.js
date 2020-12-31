@@ -7,9 +7,6 @@ $('add-music-button').addEventListener('click',()=>{
     ipcRenderer.send('add-music-window')
 })
 
-$('music-lyric').addEventListener('click',()=>{
-    ipcRenderer.send('music-lyric-window')
-})
 
 
 const renderListHTML = (tracks) =>{
