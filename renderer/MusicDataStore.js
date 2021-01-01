@@ -19,13 +19,25 @@ class DataStore extends Store{
             return {
                 id:uuidv4(),
                 path:track,
-                fileName: path.basename(track)
+                fileName: path.basename(track),
+                posterPath: '', 
+                lyricsPath: ''
             }
         }).filter(track =>{//去重
             const currentTracksPath = this.getTracks().map(track => track.path)
             return currentTracksPath.indexOf(track.path)<0
         })
         this.tracks = [...this.tracks,...tracksWithProps]//安插在track数组后面
+        return this.saveTracks()
+    }
+    mdfPoster(id, poster) {
+        var index = this.tracks.findIndex(track => track.id === id)
+        this.tracks[index].posterPath = poster
+        return this.saveTracks()
+    }
+    mdfLyrics(id, lyrics) {
+        var index = this.tracks.findIndex(track => track.id === id )
+        this.tracks[index].lyricsPath = lyrics
         return this.saveTracks()
     }
     deleteTrack(deletedId) {
