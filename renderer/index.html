@@ -18,7 +18,7 @@
             <li class="active"><a href="#home" data-toggle="tab">home</a></li>
             <li><a href="#music" data-toggle="tab">music</a></li>    
         </ul>
-        <div class="tab-content">
+        <div id="my-tab-content" class="tab-content">
             <div class="tab-pane active" id="home">
                 <div class="container mt-4">
                     <h1>我的播放器</h1>
@@ -29,7 +29,22 @@
                 </div>  
             </div>
             <div class="tab-pane fade" id="music">
-                <h1 id="back">back</h1>
+                <div class="container mt-5">
+                        <img src="../resourse/Reflection of an Angel.jpg" id="bg_img">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div id="poster_div">
+                                    <img src="../resourse/needle.png" id="poster_needle" class="animation_needle_play">
+                                    <img src="../resourse/Reflection of an Angel.jpg" id = "music_poster_img" class="animation_play">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="lyricWrapper">
+                                    <div id="lyricContainer"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </div>
         </div>
         
@@ -42,18 +57,6 @@
             </div>
         </div>  
         <script>
-            jQuery(document).ready(function ($) {
-                $('#tabs').tab();
-
-                $('#player-status').click(function(){
-                    // console.log('player-status click')
-                    $(`#tabs a[href='#music']`).tab('show')
-                });
-
-                $('#back').click(function (){
-                    $(`#tabs a[href='#home']`).tab('show')
-                })
-            });
             require('./index.js')
         </script>     
     </body>
